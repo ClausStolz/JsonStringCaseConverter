@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonStringCaseConverter", "src\JsonStringCaseConverter\JsonStringCaseConverter.csproj", "{0C63B3C2-353D-454F-A998-92AA0B5D66A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonStringCaseConverter.Tests", "test\JsonStringCaseConverter.Tests\JsonStringCaseConverter.Tests.csproj", "{2CEA5EB9-777E-4CEE-B769-BB1D52C1EBB5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0C63B3C2-353D-454F-A998-92AA0B5D66A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C63B3C2-353D-454F-A998-92AA0B5D66A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C63B3C2-353D-454F-A998-92AA0B5D66A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C63B3C2-353D-454F-A998-92AA0B5D66A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CEA5EB9-777E-4CEE-B769-BB1D52C1EBB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CEA5EB9-777E-4CEE-B769-BB1D52C1EBB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CEA5EB9-777E-4CEE-B769-BB1D52C1EBB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CEA5EB9-777E-4CEE-B769-BB1D52C1EBB5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
