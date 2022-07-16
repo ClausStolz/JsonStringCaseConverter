@@ -2,6 +2,7 @@
 # JsonStringCaseConverter
 
 ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
+[![NuGet Badge](https://buildstats.info/nuget/JsonStringCaseConverter)](https://www.nuget.org/packages/JsonStringCaseConverter/)
 
 # Info
 
@@ -55,7 +56,7 @@ To configure for .NET Core project:
 services.AddControllers()
     .AddJsonOptions(options => 
     {
-        options.JsonSerializerOptions.PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy(StringCases.PascalCase)
+        options.JsonSerializerOptions.PropertyNamingPolicy = new JsonStringCaseNamingPolicy(StringCases.PascalCase)
     });
 ```
 
@@ -64,7 +65,7 @@ To configure for .NET 6.0 Minimal API:
 ```csharp
 builder.Services.Configure<JsonOptions>(options =>
 {
-    options.SerializerOptions.PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy(StringCases.SnakeCase));
+    options.SerializerOptions.PropertyNamingPolicy = new JsonStringCaseNamingPolicy(StringCases.SnakeCase));
 });
 ```
 
