@@ -2,7 +2,6 @@
 # JsonStringCaseConverter
 
 ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
-[![NuGet Badge](https://buildstats.info/nuget/SmartEnums)](https://www.nuget.org/packages/SmartEnums/)
 
 # Info
 
