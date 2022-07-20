@@ -80,3 +80,9 @@ var snakeText = someText.ToSnakeCase();
 
 var pascalText = someText.ToPascalCase();
 ```
+
+There is also an extension of the separating string into words with case register.
+```
+var words = someText.SplitForWords();
+// words = ["some", "Text", "WITH", "SaVing", "case", "REGISTER"]
+```
