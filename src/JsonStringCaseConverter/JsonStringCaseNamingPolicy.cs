@@ -36,6 +36,7 @@ namespace JsonStringCaseConverter
                 StringCases.SnakeCase => name.ToSnakeCase(),
                 StringCases.CamelCase => name.ToCamelCase(),
                 StringCases.PascalCase => name.ToPascalCase(),
+                StringCases.ConstantCase => name.ToConstantCase(),
                 _ => throw new ArgumentOutOfRangeException(),
             };
     }

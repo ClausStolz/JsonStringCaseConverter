@@ -16,7 +16,20 @@ namespace JsonStringCaseConverter.Tests
         {
             Assert.That(source.ToSnakeCase(), Is.EqualTo(result));
         }
-
+        
+        [TestCase("", "")]
+        [TestCase("ID", "ID")]
+        [TestCase("IDTest", "ID_TEST")]
+        [TestCase("TestIt", "TEST_IT")]
+        [TestCase("testTest", "TEST_TEST")]
+        [TestCase("test_test", "TEST_TEST")]
+        [TestCase("Test TestTest", "TEST TEST_TEST")]
+        [TestCase("Test TestTEST", "TEST TEST_TEST")]
+        public void ToConstantCaseTest(string source, string result)
+        {
+            Assert.That(source.ToConstantCase(), Is.EqualTo(result));
+        }
+        
         [TestCase("", "")]
         [TestCase("ID", "Id")]
         [TestCase("IDTest", "IdTest")]

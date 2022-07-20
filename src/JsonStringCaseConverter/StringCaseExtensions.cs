@@ -43,6 +43,19 @@ namespace JsonStringCaseConverter
 
             return result.ToString().ToLower();
         }
+        
+        /// <summary>
+        /// Convert in CONSTANT_CASE format.
+        /// </summary>
+        /// <param name="source">
+        /// A string in camelCase or PascalCase format.
+        /// </param>
+        public static string ToConstantCase(this string? source)
+        {
+            if (string.IsNullOrEmpty(source)) return source ?? string.Empty;
+
+            return source.ToSnakeCase().ToUpper();
+        }
 
         /// <summary>
         /// Convert in PascalCase format.

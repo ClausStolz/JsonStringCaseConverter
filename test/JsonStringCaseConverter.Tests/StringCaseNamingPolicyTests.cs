@@ -21,6 +21,9 @@ namespace JsonStringCaseConverter.Tests
         [TestCase(
             StringCases.PascalCase,
             @"{""Text"":""test"",""DateTime"":""1996-08-25T10:44:00Z"",""Array"":[""first"",""second""]}")]
+        [TestCase(
+            StringCases.ConstantCase,
+            @"{""TEXT"":""test"",""DATE_TIME"":""1996-08-25T10:44:00Z"",""ARRAY"":[""first"",""second""]}")]
         public void SerializationTest(StringCases stringCase, string result)
         {
             var json = JsonSerializer.Serialize(data, new JsonSerializerOptions()
@@ -40,6 +43,9 @@ namespace JsonStringCaseConverter.Tests
         [TestCase(
             StringCases.PascalCase,
             @"{""Text"":""test"",""DateTime"":""1996-08-25T10:44:00Z"",""Array"":[""first"",""second""]}")]
+        [TestCase(
+            StringCases.ConstantCase,
+            @"{""TEXT"":""test"",""DATE_TIME"":""1996-08-25T10:44:00Z"",""ARRAY"":[""first"",""second""]}")]
         public void DeserializationTest(StringCases stringCase, string value)
         {
             var obj = JsonSerializer.Deserialize<TestData>(value, new JsonSerializerOptions()
