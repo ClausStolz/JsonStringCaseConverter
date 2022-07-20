@@ -1,0 +1,27 @@
+name: .NET
+
+on:
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        platform: [ ubuntu-latest, macos-latest, windows-latest ]
+        
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+      - name: Checkout repository
+      - uses: actions/checkout@v3
+      - name: Setup .NET on ${{ matrix.platform }}
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: |
+              5.0.x
+              6.0.x
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
