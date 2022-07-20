@@ -21,7 +21,8 @@ jobs:
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: ${{ matrix.dotnet-version }}
-    - name: Build
-      run: dotnet build
+    - name: Restore NuGet package
+      run:
+          nuget restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
