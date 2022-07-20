@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace JsonStringCaseConverter;
 
@@ -12,10 +13,14 @@ public static class StringCaseConvertExtension
     /// <summary>
     /// Convert in snake_case format.
     /// </summary>
-    /// <param name="value">String in camelCase or PascalCase format.</param>
-    public static string ToSnakeCase(this string value)
+    /// <param name="source">
+    /// A string in camelCase or PascalCase format.
+    /// </param>
+    public static string ToSnakeCase(this string? source)
     {
-        var words = value.Split(' ');
+        if (string.IsNullOrEmpty(source)) return source ?? string.Empty;
+
+        var words = source.Split();
         var result = new StringBuilder("");
         
         foreach (var word in words.Select((c, i) => new {indx = i, value = c}))
@@ -24,11 +29,13 @@ public static class StringCaseConvertExtension
             {
                 result.Append(' ');
             }
-            foreach (var letter in word.value.Select((c, i) => new { indx = i, value = c }))
+            
+            foreach (var subWord in word.value.SplitForWords().Select((c, i) => new { indx = i, value = c }))
             {
-                result.Append(letter.indx > 0 && char.IsUpper(letter.value)
-                    ? $"_{letter.value}"
-                    : letter.value.ToString());
+                result.Append(subWord.indx > 0
+                    ? $"_{subWord.value}"
+                    : subWord.value
+                );
             }
         }
         return result.ToString().ToLower();
@@ -37,10 +44,17 @@ public static class StringCaseConvertExtension
     /// <summary>
     /// Convert in PascalCase format.
     /// </summary>
-    /// <param name="value">String in PascalCase or snake_case format.</param>
-    public static string ToPascalCase(this string value)
+    /// <param name="source">
+    /// A string in PascalCase or snake_case format.
+    /// </param>
+    /// <param name="saveUpperCase">
+    /// The identifier to save uppercase words for string.
+    /// </param>
+    public static string ToPascalCase(this string? source, bool saveUpperCase = false)
     {
-        var words = value.Split(' ');
+        if (string.IsNullOrEmpty(source)) return source ?? string.Empty;
+        
+        var words = source.Split();
         var result = new StringBuilder("");
         
         foreach (var word in words.Select((c, i) => new {indx = i, value = c}))
@@ -50,9 +64,12 @@ public static class StringCaseConvertExtension
                 result.Append(' ');
             }
 
-            foreach (var subWord in word.value.Split('_'))
+            foreach (var subWord in word.value.SplitForWords())
             {
-                result.Append(char.ToUpper(subWord[0]) + subWord[1..]);
+                result.Append(saveUpperCase 
+                    ? char.ToUpper(subWord[0]) + subWord[1..]
+                    : char.ToUpper(subWord[0]) + subWord[1..].ToLower()
+                );
             }
         }
         return result.ToString();
@@ -61,10 +78,17 @@ public static class StringCaseConvertExtension
     /// <summary>
     /// Convert in camelCase format.
     /// </summary>
-    /// <param name="value">String in PascalCase or snake_case format.</param>
-    public static string ToCamelCase(this string value)
+    /// <param name="source">
+    /// A string in PascalCase or snake_case format.
+    /// </param>
+    /// <param name="saveUpperCase">
+    /// The identifier to save uppercase words for string.
+    /// </param>
+    public static string ToCamelCase(this string? source, bool saveUpperCase = false)
     {
-        var words = value.Split(' ');
+        if (string.IsNullOrEmpty(source)) return source ?? string.Empty;
+        
+        var words = source.Split(' ');
         var result = new StringBuilder("");
     
         foreach (var word in words.Select((c, i) => new {indx = i, value = c}))
@@ -74,13 +98,44 @@ public static class StringCaseConvertExtension
                 result.Append(' ');
             }
 
-            foreach (var subWord in word.value.Split('_').Select((c, i) => new {indx = i, value = c }))
+            foreach (var subWord in word.value.SplitForWords().Select((c, i) => new {indx = i, value = c }))
             {
-                result.Append(subWord.indx > 0
-                    ? char.ToUpper(subWord.value[0]) + subWord.value[1..]
-                    : char.ToLower(subWord.value[0]) + subWord.value[1..]);
+                if (saveUpperCase && !subWord.value.Any(x => char.IsLetter(x) && char.IsLower(x)))
+                {
+                    result.Append(subWord.value);
+                }
+                else
+                {
+                    result.Append(subWord.indx > 0
+                        ? char.ToUpper(subWord.value[0]) + subWord.value[1..].ToLower()
+                        : char.ToLower(subWord.value[0]) + subWord.value[1..].ToLower()
+                    );
+                }
             }
         }
         return result.ToString();
+    }
+
+    /// <summary>
+    /// Split string for words with saving register.
+    /// </summary>
+    /// <param name="source">
+    /// A string that will be split into individual words,
+    /// preserving their case.
+    /// </param>
+    public static IEnumerable<string> SplitForWords(this string source)
+    {
+        if (string.IsNullOrEmpty(source)) return new [] { string.Empty };
+        
+        var r = new Regex(@"
+            (?<=[A-Z])(?=[A-Z][a-z]) |
+            (?<=[^A-Z])(?=[A-Z]) |
+            (?<=[A-Za-z])(?=[^A-Za-z])", 
+            RegexOptions.IgnorePatternWhitespace
+        );
+
+        return r.Split(source.Replace('_', ' '))
+            .Select(x => x.Replace(" ", ""))
+            .Where(x => !string.IsNullOrEmpty(x));
     }
 }
